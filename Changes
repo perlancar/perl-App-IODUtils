@@ -1,5 +1,11 @@
 Revision history for App-IODUtils
 
+0.02    2014-08-27 (PERLANCAR)
+
+        - Switch to Perinci::CmdLine::Lite because it now can handle
+          cmdline_src.
+
+
 0.01    2014-08-27 (PERLANCAR)
 
         - First release.
