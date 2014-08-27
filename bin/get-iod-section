@@ -1,0 +1,59 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use Perinci::CmdLine 1.23;
+
+our %SPEC;
+$SPEC{get_iod_section} = {
+    v => 1.1,
+    summary => 'Get whole section of IOD configuration file',
+    args => {
+        iod => {
+            summary => 'IOD file',
+            schema  => ['str*'],
+            req     => 1,
+            pos     => 0,
+            cmdline_src => 'stdin_or_files',
+        },
+        section => {
+            schema  => 'str*',
+            req     => 1,
+            pos     => 1,
+        },
+    },
+};
+sub get_iod_section {
+    my %args = @_;
+
+    state $reader = do {
+        require Config::IOD::Reader;
+        Config::IOD::Reader->new;
+    };
+
+    my $hoh = $reader->read_string($args{iod});
+
+    my $section = $args{section};
+
+    return [404, "No such section"] unless exists $hoh->{$section};
+    [200, "OK", $hoh->{$section}];
+}
+
+Perinci::CmdLine->new(
+    url => '/main/get_iod_section',
+)->run;
+
+# ABSTRACT: Get whole section of IOD configuration file
+# PODNAME: get-iod-section
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % get-iod-section /path/to/file.iod section
+

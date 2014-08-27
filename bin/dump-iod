@@ -1,0 +1,50 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use Perinci::CmdLine 1.23;
+
+our %SPEC;
+$SPEC{dump_iod} = {
+    v => 1.1,
+    summary => 'Parse IOD using Config::IOD::Reader and display the result',
+    args => {
+        iod => {
+            summary => 'IOD file',
+            schema  => ['str*'],
+            req     => 1,
+            pos     => 0,
+            cmdline_src => 'stdin_or_files',
+        },
+    },
+    result_naked => 1,
+};
+sub dump_iod {
+    my %args = @_;
+
+    state $reader = do {
+        require Config::IOD::Reader;
+        Config::IOD::Reader->new;
+    };
+
+    $reader->read_string($args{iod});
+}
+
+Perinci::CmdLine->new(
+    url => '/main/dump_iod',
+)->run;
+
+# ABSTRACT: Parse IOD using Config::IOD::Reader and display the result
+# PODNAME: dump-iod
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % dump-iod /path/to/file.iod
+
