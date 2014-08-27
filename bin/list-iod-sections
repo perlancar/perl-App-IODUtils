@@ -7,7 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Perinci::CmdLine 1.23;
+use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
 $SPEC{list_iod_sections} = {
@@ -35,7 +35,7 @@ sub list_iod_sections {
     [200, "OK", [sort keys %$hoh]];
 }
 
-Perinci::CmdLine->new(
+Perinci::CmdLine::Any->new(
     url => '/main/list_iod_sections',
 )->run;
 

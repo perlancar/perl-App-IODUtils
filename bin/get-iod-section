@@ -7,7 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Perinci::CmdLine 1.23;
+use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
 $SPEC{get_iod_section} = {
@@ -44,7 +44,7 @@ sub get_iod_section {
     [200, "OK", $hoh->{$section}];
 }
 
-Perinci::CmdLine->new(
+Perinci::CmdLine::Any->new(
     url => '/main/get_iod_section',
 )->run;
 

@@ -7,7 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Perinci::CmdLine 1.23;
+use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
 $SPEC{dump_iod} = {
@@ -35,7 +35,7 @@ sub dump_iod {
     $reader->read_string($args{iod});
 }
 
-Perinci::CmdLine->new(
+Perinci::CmdLine::Any->new(
     url => '/main/dump_iod',
 )->run;
 
