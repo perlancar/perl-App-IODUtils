@@ -7,6 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use App::IODUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -14,13 +15,7 @@ $SPEC{dump_iod} = {
     v => 1.1,
     summary => 'Parse IOD using Config::IOD::Reader and display the result',
     args => {
-        iod => {
-            summary => 'IOD file',
-            schema  => ['str*'],
-            req     => 1,
-            pos     => 0,
-            cmdline_src => 'stdin_or_files',
-        },
+        %App::IODUtils::common_args,
     },
     result_naked => 1,
 };
@@ -29,7 +24,7 @@ sub dump_iod {
 
     state $reader = do {
         require Config::IOD::Reader;
-        Config::IOD::Reader->new;
+        Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
     };
 
     $reader->read_string($args{iod});
