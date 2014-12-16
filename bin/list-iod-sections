@@ -8,7 +8,7 @@ use strict;
 use warnings;
 
 use App::IODUtils;
-use Perinci::CmdLine::Any -prefer_lite=>1;
+use Perinci::CmdLine::Any;
 
 our %SPEC;
 $SPEC{list_iod_sections} = {
@@ -34,7 +34,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/list_iod_sections',
 )->run;
 
-# ABSTRACT: List all sections of an IOD configuration file
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS
