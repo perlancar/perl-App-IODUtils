@@ -51,7 +51,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/get_iod_key',
 )->run;
 
-# ABSTRACT: Get key value from IOD configration file
+# ABSTRACT: 
 # PODNAME:
 
 =head1 SYNOPSIS

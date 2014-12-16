@@ -34,7 +34,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/dump_iod',
 )->run;
 
-# ABSTRACT: Parse IOD using Config::IOD::Reader and display the result
+# ABSTRACT: 
 # PODNAME:
 
 =head1 SYNOPSIS
