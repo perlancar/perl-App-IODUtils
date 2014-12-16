@@ -35,7 +35,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: List all sections of an IOD configuration file
-# PODNAME: list-iod-sections
+# PODNAME:
 
 =head1 SYNOPSIS
 

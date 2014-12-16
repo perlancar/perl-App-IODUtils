@@ -44,7 +44,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Get whole section of IOD configuration file
-# PODNAME: get-iod-section
+# PODNAME:
 
 =head1 SYNOPSIS
 

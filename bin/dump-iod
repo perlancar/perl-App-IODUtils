@@ -35,7 +35,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Parse IOD using Config::IOD::Reader and display the result
-# PODNAME: dump-iod
+# PODNAME:
 
 =head1 SYNOPSIS
 
