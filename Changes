@@ -1,5 +1,14 @@
 Revision history for App-IODUtils
 
+0.04    2015-03-18 (PERLANCAR)
+
+        - [ux] For convenience, dump-iod now returns naked result by default (to
+          return enveloped result, use --no-naked-res).
+
+        - Add scripts: delete-iod-key, delete-iod-section, insert-iod-key,
+          insert-iod-section.
+
+
 0.03    2014-08-30 (PERLANCAR)
 
         - Add option: --enable-expr (-e).

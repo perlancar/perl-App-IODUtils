@@ -6,6 +6,7 @@
 use 5.010;
 use strict;
 use warnings;
+no warnings 'once';
 
 use App::IODUtils;
 use Perinci::CmdLine::Any;
@@ -15,10 +16,6 @@ $SPEC{delete_iod_section} = {
     v => 1.1,
     summary => 'Delete a section (and its contents) from '.
         'IOD configuration file',
-    args_groups => [
-        {args=>[qw/add ignore/], rel=>'one_of'},
-        {args=>[qw/top linum/], rel=>'one_of'},
-    ],
     args => {
         %App::IODUtils::common_args,
         %App::IODUtils::inplace_arg,
