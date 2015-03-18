@@ -1,0 +1,70 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::IODUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{delete_iod_section} = {
+    v => 1.1,
+    summary => 'Delete a section (and its contents) from '.
+        'IOD configuration file',
+    args_groups => [
+        {args=>[qw/add ignore/], rel=>'one_of'},
+        {args=>[qw/top linum/], rel=>'one_of'},
+    ],
+    args => {
+        %App::IODUtils::common_args,
+        %App::IODUtils::inplace_arg,
+        section => {
+            schema  => 'str*',
+            req     => 1,
+            pos     => 1,
+        },
+        all => {
+            summary => 'Delete all occurrences instead of just the first',
+            schema => [bool => is=>1],
+        },
+    },
+};
+sub delete_iod_section {
+    require Config::IOD;
+
+    my %args = @_;
+    App::IODUtils::_check_inplace(\%args);
+
+    my $parser = Config::IOD->new(enable_expr=>$args{enable_expr});
+
+    my $doc = $parser->read_string($args{iod});
+
+    $doc->delete_section(
+        {
+            all     => $args{all},
+        },
+        $args{section},
+    );
+
+    App::IODUtils::_return_mod_result(\%args, $doc);
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/delete_iod_section',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % delete-iod-section /path/to/file.iod section
+
+
+
