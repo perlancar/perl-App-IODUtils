@@ -1,0 +1,52 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::IODUtils;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{parse_iod} = {
+    v => 1.1,
+    summary => 'Show parse result of IOD configuration file',
+    args => {
+        %App::IODUtils::common_args,
+    },
+    result_naked => 1,
+    'cmdline.default_format' => 'json-pretty',
+};
+sub parse_iod {
+    require Config::IOD;
+
+    my %args = @_;
+
+    my $parser = Config::IOD->new(enable_expr=>$args{enable_expr});
+
+    # for convenience, don't show result envelope by default (result envelope
+    # can be shown by using --no-naked-res).
+    if ($args{-cmdline_r}) {
+        $args{-cmdline_r}{naked_res} //= 1;
+    }
+
+    $parser->read_string($args{iod})->{_parsed};
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/parse_iod',
+    pass_cmdline_object => 1,
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % parse-iod /path/to/file.iod
+
