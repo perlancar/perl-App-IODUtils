@@ -20,12 +20,11 @@ $SPEC{dump_iod} = {
     result_naked => 1,
 };
 sub dump_iod {
+    require Config::IOD::Reader;
+
     my %args = @_;
 
-    state $reader = do {
-        require Config::IOD::Reader;
-        Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
-    };
+    my $reader = Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
 
     # for convenience, don't show result envelope by default (result envelope
     # can be shown by using --no-naked-res).

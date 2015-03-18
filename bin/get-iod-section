@@ -24,12 +24,10 @@ $SPEC{get_iod_section} = {
     },
 };
 sub get_iod_section {
+    require Config::IOD::Reader;
     my %args = @_;
 
-    state $reader = do {
-        require Config::IOD::Reader;
-        Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
-    };
+    my $reader = Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
 
     my $hoh = $reader->read_string($args{iod});
 
