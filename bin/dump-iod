@@ -27,11 +27,16 @@ sub dump_iod {
         Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
     };
 
+    if ($args{-cmdline_r}) {
+        $args{-cmdline_r}{naked_res} //= 1;
+    }
+
     $reader->read_string($args{iod});
 }
 
 Perinci::CmdLine::Any->new(
     url => '/main/dump_iod',
+    pass_cmdline_object => 1,
 )->run;
 
 # ABSTRACT:
