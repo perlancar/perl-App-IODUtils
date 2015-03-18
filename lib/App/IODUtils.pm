@@ -12,11 +12,13 @@ our %common_args = (
         req     => 1,
         pos     => 0,
         cmdline_src => 'stdin_or_file',
+        tags    => ['common'],
     },
     enable_expr => {
         schema  => 'bool',
         default => 0,
         cmdline_aliases => {e=>{}},
+        tags    => ['common'],
     },
 );
 
