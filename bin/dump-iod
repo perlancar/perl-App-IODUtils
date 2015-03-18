@@ -27,6 +27,8 @@ sub dump_iod {
         Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
     };
 
+    # for convenience, don't show result envelope by default (result envelope
+    # can be shown by using --no-naked-res).
     if ($args{-cmdline_r}) {
         $args{-cmdline_r}{naked_res} //= 1;
     }
