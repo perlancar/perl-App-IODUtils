@@ -14,6 +14,11 @@ our %SPEC;
 $SPEC{parse_iod} = {
     v => 1.1,
     summary => 'Show parse result of IOD configuration file',
+    description => <<'_',
+
+IOD is parsed using Perl module `Config::IOD`.
+
+_
     args => {
         %App::IODUtils::common_args,
     },
