@@ -1,5 +1,12 @@
 Revision history for App-IODUtils
 
+0.06    2015-03-19 (PERLANCAR)
+
+	- Add common option to scripts: --ignore-unknown-directive.
+
+	- More proper setting of naked_res for dump-iod & parse-iod.
+
+
 0.05    2015-03-18 (PERLANCAR)
 
         - Add script: parse-iod.
