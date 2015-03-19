@@ -19,11 +19,9 @@ $SPEC{list_iod_sections} = {
     },
 };
 sub list_iod_sections {
-    require Config::IOD::Reader;
-
     my %args = @_;
 
-    my $reader = Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
+    my $reader = App::IODUtils::_get_reader(\%args);
 
     my $hoh = $reader->read_string($args{iod});
     [200, "OK", [sort keys %$hoh]];

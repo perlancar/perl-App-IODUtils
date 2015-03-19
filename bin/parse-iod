@@ -26,11 +26,9 @@ _
     'cmdline.default_format' => 'json-pretty',
 };
 sub parse_iod {
-    require Config::IOD;
-
     my %args = @_;
 
-    my $parser = Config::IOD->new(enable_expr=>$args{enable_expr});
+    my $parser = App::IODUtils::_get_parser(\%args);
 
     $parser->read_string($args{iod})->{_parsed};
 }

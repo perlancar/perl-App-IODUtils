@@ -21,11 +21,9 @@ $SPEC{dump_iod} = {
     'cmdline.default_format' => 'json-pretty',
 };
 sub dump_iod {
-    require Config::IOD::Reader;
-
     my %args = @_;
 
-    my $reader = Config::IOD::Reader->new(enable_expr=>$args{enable_expr});
+    my $reader = App::IODUtils::_get_reader(\%args);
 
     $reader->read_string($args{iod});
 }

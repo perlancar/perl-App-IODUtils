@@ -31,12 +31,10 @@ $SPEC{delete_iod_section} = {
     },
 };
 sub delete_iod_section {
-    require Config::IOD;
-
     my %args = @_;
     App::IODUtils::_check_inplace(\%args);
 
-    my $parser = Config::IOD->new(enable_expr=>$args{enable_expr});
+    my $parser = App::IODUtils::_get_parser(\%args);
 
     my $doc = $parser->read_string($args{iod});
 

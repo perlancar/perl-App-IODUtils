@@ -20,6 +20,11 @@ our %common_args = (
         cmdline_aliases => {e=>{}},
         tags    => ['common'],
     },
+    ignore_unknown_directive => {
+        schema  => 'bool',
+        default => 0,
+        tags    => ['common'],
+    },
 );
 
 our %inplace_arg = (
@@ -56,6 +61,26 @@ sub _return_mod_result {
     } else {
         [200, "OK", $doc->as_string, {'cmdline.skip_format'=>1}];
     }
+}
+
+sub _get_parser {
+    require Config::IOD;
+
+    my $args = shift;
+    Config::IOD->new(
+        enable_expr=>$args->{enable_expr},
+        ignore_unknown_directive=>$args->{ignore_unknown_directive},
+    );
+}
+
+sub _get_reader {
+    require Config::IOD::Reader;
+
+    my $args = shift;
+    Config::IOD::Reader->new(
+        enable_expr=>$args->{enable_expr},
+        ignore_unknown_directive=>$args->{ignore_unknown_directive},
+    );
 }
 
 1;
