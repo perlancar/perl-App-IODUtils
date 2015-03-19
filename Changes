@@ -1,5 +1,13 @@
 Revision history for App-IODUtils
 
+0.07    2015-03-19 (PERLANCAR)
+
+        - No functional changes.
+
+        - [dist] Update prereqs to versions of Config::IOD & Config::IOD::Reader
+          which support ignore_unknown_directive.
+
+
 0.06    2015-03-19 (PERLANCAR)
 
 	- Add common option to scripts: --ignore-unknown-directive.
