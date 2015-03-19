@@ -32,19 +32,19 @@ sub parse_iod {
 
     my $parser = Config::IOD->new(enable_expr=>$args{enable_expr});
 
-    # for convenience, don't show result envelope by default (result envelope
-    # can be shown by using --no-naked-res).
-    if ($args{-cmdline_r}) {
-        $args{-cmdline_r}{naked_res} //= 1;
-    }
-
     $parser->read_string($args{iod})->{_parsed};
 }
 
-Perinci::CmdLine::Any->new(
+my $cli = Perinci::CmdLine::Any->new(
     url => '/main/parse_iod',
     pass_cmdline_object => 1,
-)->run;
+);
+
+# so help message can be more helpful
+$cli->common_opts->{format}{default} = 'json-pretty';
+$cli->common_opts->{naked_res}{default} = 1;
+
+$cli->run;
 
 # ABSTRACT:
 # PODNAME:
