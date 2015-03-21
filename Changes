@@ -1,5 +1,13 @@
 Revision history for App-IODUtils
 
+0.08    2015-03-21 (PERLANCAR)
+
+	- No functional changes.
+
+	- [Documentation] Mention list of utilities in main module, add See
+	  Also.
+
+
 0.07    2015-03-19 (PERLANCAR)
 
         - No functional changes.
