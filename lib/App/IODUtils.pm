@@ -90,9 +90,13 @@ sub _get_reader {
 
 This distribution provides the following command-line utilities:
 
- dump-iod
- get-iod-key
- get-iod-section
- list-iod-sections
+#INSERT_EXECS_LIST
+
+The main feature of these utilities is tab completion.
 
 
+=head1 SEE ALSO
+
+#INSERT_BLOCK: App::PMUtils see_also
+
+=cut
