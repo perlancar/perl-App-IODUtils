@@ -13,10 +13,10 @@ use Perinci::CmdLine::Any;
 our %SPEC;
 $SPEC{parse_iod} = {
     v => 1.1,
-    summary => 'Show parse result of IOD configuration file',
+    summary => 'Parse IOD using Config::IOD module and show the raw result',
     description => <<'_',
 
-IOD is parsed using Perl module `Config::IOD`.
+Mostly only useful for developer for debugging purposes.
 
 _
     args => {
