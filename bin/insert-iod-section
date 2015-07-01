@@ -15,10 +15,12 @@ our %SPEC;
 $SPEC{insert_iod_section} = {
     v => 1.1,
     summary => 'Insert an new empty section to IOD configuration file',
-    args_groups => [
-        {args=>[qw/add ignore/], rel=>'one_of'},
-        {args=>[qw/top linum/], rel=>'one_of'},
-    ],
+    args_rels => {
+        'choose_one&' => [
+            [qw/add ignore/],
+            [qw/top linum/],
+        ],
+    },
     args => {
         %App::IODUtils::common_args,
         %App::IODUtils::inplace_arg,
@@ -84,6 +86,3 @@ Perinci::CmdLine::Any->new(
 Basic usage:
 
  % insert-iod-section /path/to/file.iod section
-
-
-
