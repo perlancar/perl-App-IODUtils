@@ -1,5 +1,11 @@
 Revision history for App-IODUtils
 
+0.12    2016-03-01 (PERLANCAR)
+
+        - Add all the other parser options (previously only
+          --ignore-unknown-encoding and --enable-expr were available).
+
+
 0.11    2016-01-18 (PERLANCAR)
 
         - No functional changes.
