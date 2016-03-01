@@ -14,28 +14,76 @@ our %common_args = (
         cmdline_src => 'stdin_or_file',
         tags    => ['common'],
     },
-    enable_expr => {
+
+    default_section => {
+        schema  => 'str*',
+        default => 'GLOBAL',
+        tags    => ['common', 'category:parser'],
+    },
+    enable_encoding => {
         schema  => 'bool',
-        default => 0,
-        cmdline_aliases => {e=>{}},
-        tags    => ['common'],
+        default => 1,
+        tags    => ['common', 'category:parser'],
+    },
+    enable_quoting => {
+        schema  => 'bool',
+        default => 1,
+        tags    => ['common', 'category:parser'],
+    },
+    enable_bracket => {
+        schema  => 'bool',
+        default => 1,
+        tags    => ['common', 'category:parser'],
+    },
+    enable_brace => {
+        schema  => 'bool',
+        default => 1,
+        tags    => ['common', 'category:parser'],
     },
     allow_encodings => {
         'x.name.is_plural' => 1,
         'x.name.singular' => 'allow_encoding',
         schema  => ['array*', of=>'str*'],
-        tags    => ['common'],
+        tags    => ['common', 'category:parser'],
     },
     disallow_encodings => {
         'x.name.is_plural' => 1,
         'x.name.singular' => 'disallow_encoding',
         schema  => ['array*', of=>'str*'],
-        tags    => ['common'],
+        tags    => ['common', 'category:parser'],
+    },
+    allow_directives => {
+        'x.name.is_plural' => 1,
+        'x.name.singular' => 'allow_directive',
+        schema  => ['array*', of=>'str*'],
+        tags    => ['common', 'category:parser'],
+    },
+    disallow_directives => {
+        'x.name.is_plural' => 1,
+        'x.name.singular' => 'disallow_directive',
+        schema  => ['array*', of=>'str*'],
+        tags    => ['common', 'category:parser'],
+    },
+    allow_bang_only => {
+        schema  => 'bool',
+        default => 1,
+        tags    => ['common', 'category:parser'],
+    },
+    enable_expr => {
+        schema  => 'bool',
+        default => 0,
+        cmdline_aliases => {e=>{}},
+        tags    => ['common', 'category:parser'],
+    },
+    allow_duplicate_key => {
+        schema  => 'bool',
+        default => 1,
+        tags    => ['common', 'category:parser'],
     },
     ignore_unknown_directive => {
         schema  => 'bool',
         default => 0,
-        tags    => ['common'],
+        tags    => ['common', 'category:parser'],
     },
 );
 
@@ -75,15 +123,30 @@ sub _return_mod_result {
     }
 }
 
+sub _get_parser_options {
+    my $args = shift;
+    return (
+        default_section          => $args->{default_section},
+        enable_encoding          => $args->{enable_encoding},
+        enable_quoting           => $args->{enable_quoting},
+        enable_bracket           => $args->{enable_bracket},
+        enable_brace             => $args->{enable_brace},
+        (allow_encodings         => $args->{allow_encodings})     x !!@{ $args->{allow_encodings}     // [] },
+        (disallow_encodings      => $args->{disallow_encodings})  x !!@{ $args->{disallow_encodings}  // [] },
+        (allow_directives        => $args->{allow_directives})    x !!@{ $args->{allow_directives}    // [] },
+        (disallow_directives     => $args->{disallow_directives}) x !!@{ $args->{disallow_directives} // [] },
+        enable_expr              => $args->{enable_expr},
+        allow_duplicate_key      => $args->{allow_duplicate_key},
+        ignore_unknown_directive => $args->{ignore_unknown_directive},
+    );
+}
+
 sub _get_parser {
     require Config::IOD;
 
     my $args = shift;
     Config::IOD->new(
-        enable_expr=>$args->{enable_expr},
-        ignore_unknown_directive=>$args->{ignore_unknown_directive},
-        (allow_encodings    => $args->{allow_encodings})    x !!@{ $args->{allow_encodings}    // [] },
-        (disallow_encodings => $args->{disallow_encodings}) x !!@{ $args->{disallow_encodings} // [] },
+        _get_parser_options($args),
     );
 }
 
@@ -92,10 +155,7 @@ sub _get_reader {
 
     my $args = shift;
     Config::IOD::Reader->new(
-        enable_expr=>$args->{enable_expr},
-        ignore_unknown_directive=>$args->{ignore_unknown_directive},
-        (allow_encodings    => $args->{allow_encodings})    x !!@{ $args->{allow_encodings}    // [] },
-        (disallow_encodings => $args->{disallow_encodings}) x !!@{ $args->{disallow_encodings} // [] },
+        _get_parser_options($args),
     );
 }
 
