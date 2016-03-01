@@ -20,6 +20,18 @@ our %common_args = (
         cmdline_aliases => {e=>{}},
         tags    => ['common'],
     },
+    allow_encodings => {
+        'x.name.is_plural' => 1,
+        'x.name.singular' => 'allow_encoding',
+        schema  => ['array*', of=>'str*'],
+        tags    => ['common'],
+    },
+    disallow_encodings => {
+        'x.name.is_plural' => 1,
+        'x.name.singular' => 'disallow_encoding',
+        schema  => ['array*', of=>'str*'],
+        tags    => ['common'],
+    },
     ignore_unknown_directive => {
         schema  => 'bool',
         default => 0,
@@ -70,6 +82,8 @@ sub _get_parser {
     Config::IOD->new(
         enable_expr=>$args->{enable_expr},
         ignore_unknown_directive=>$args->{ignore_unknown_directive},
+        (allow_encodings    => $args->{allow_encodings})    x !!@{ $args->{allow_encodings}    // [] },
+        (disallow_encodings => $args->{disallow_encodings}) x !!@{ $args->{disallow_encodings} // [] },
     );
 }
 
@@ -80,6 +94,8 @@ sub _get_reader {
     Config::IOD::Reader->new(
         enable_expr=>$args->{enable_expr},
         ignore_unknown_directive=>$args->{ignore_unknown_directive},
+        (allow_encodings    => $args->{allow_encodings})    x !!@{ $args->{allow_encodings}    // [] },
+        (disallow_encodings => $args->{disallow_encodings}) x !!@{ $args->{disallow_encodings} // [] },
     );
 }
 
