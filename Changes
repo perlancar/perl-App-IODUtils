@@ -1,5 +1,10 @@
 Revision history for App-IODUtils
 
+0.13    2016-12-27 (PERLANCAR)
+
+        - delete-iod-section: Add --section-pattern option.
+
+
 0.12    2016-03-01 (PERLANCAR)
 
         - Add all the other parser options (previously only
