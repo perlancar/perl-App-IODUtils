@@ -20,14 +20,21 @@ $SPEC{delete_iod_section} = {
         %App::IODUtils::common_args,
         %App::IODUtils::inplace_arg,
         section => {
+            summary => 'Section name',
             schema  => 'str*',
-            req     => 1,
             pos     => 1,
+        },
+        section_pattern => {
+            summary => 'Regex to match section name',
+            schema => 'str*',
         },
         all => {
             summary => 'Delete all occurrences instead of just the first',
             schema => [bool => is=>1],
         },
+    },
+    args_rels => {
+        req_one => [qw/section section_pattern/],
     },
 };
 sub delete_iod_section {
@@ -38,12 +45,21 @@ sub delete_iod_section {
 
     my $doc = $parser->read_string($args{iod});
 
-    $doc->delete_section(
-        {
-            all     => $args{all},
-        },
-        $args{section},
-    );
+    my @sections;
+    if (defined $args{section}) {
+        @sections = ($args{section});
+    } else {
+        my $re = qr/$args{section_pattern}/;
+        @sections = grep { /$re/ } $doc->list_sections(unique => 1);
+    }
+    for (@sections) {
+        $doc->delete_section(
+            {
+                all     => $args{all},
+            },
+            $_,
+        );
+    }
 
     App::IODUtils::_return_mod_result(\%args, $doc);
 }
@@ -60,6 +76,3 @@ Perinci::CmdLine::Any->new(
 Basic usage:
 
  % delete-iod-section /path/to/file.iod section
-
-
-
