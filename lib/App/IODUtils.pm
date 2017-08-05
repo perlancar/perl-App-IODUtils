@@ -85,6 +85,12 @@ our %common_args = (
         default => 0,
         tags    => ['common', 'category:parser'],
     },
+    expr_vars => {
+        'x.name.is_plural' => 1,
+        'x.name.singular' => 'expr_var',
+        schema => ['hash*', of=>'str'],
+        tags    => ['common', 'category:parser'],
+    },
 );
 
 our %inplace_arg = (
@@ -136,6 +142,7 @@ sub _get_parser_options {
         (allow_directives        => $args->{allow_directives})    x !!@{ $args->{allow_directives}    // [] },
         (disallow_directives     => $args->{disallow_directives}) x !!@{ $args->{disallow_directives} // [] },
         enable_expr              => $args->{enable_expr},
+        (expr_vars                => $args->{expr_vars})          x !!(defined $args->{expr_vars}),
         allow_duplicate_key      => $args->{allow_duplicate_key},
         ignore_unknown_directive => $args->{ignore_unknown_directive},
     );
