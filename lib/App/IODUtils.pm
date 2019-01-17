@@ -20,6 +20,11 @@ our %common_args = (
         default => 'GLOBAL',
         tags    => ['common', 'category:parser'],
     },
+    enable_directive => {
+        schema  => 'bool',
+        default => 1,
+        tags    => ['common', 'category:parser'],
+    },
     enable_encoding => {
         schema  => 'bool',
         default => 1,
@@ -133,6 +138,7 @@ sub _get_parser_options {
     my $args = shift;
     return (
         default_section          => $args->{default_section},
+        enable_directive         => $args->{enable_directive},
         enable_encoding          => $args->{enable_encoding},
         enable_quoting           => $args->{enable_quoting},
         enable_bracket           => $args->{enable_bracket},
