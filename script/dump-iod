@@ -31,6 +31,8 @@ sub dump_iod {
 my $cli = Perinci::CmdLine::Any->new(
     url => '/main/dump_iod',
     pass_cmdline_object => 1,
+    read_config => 0,
+    read_env => 0,
 );
 
 # so help message can be more helpful
@@ -47,4 +49,3 @@ $cli->run;
 Basic usage:
 
  % dump-iod /path/to/file.iod
-
