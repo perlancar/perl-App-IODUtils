@@ -186,6 +186,8 @@ The main feature of these utilities is tab completion.
 
 =head1 SEE ALSO
 
+L<App::INIUtils>
+
 #INSERT_BLOCK: App::PMUtils see_also
 
 =cut
