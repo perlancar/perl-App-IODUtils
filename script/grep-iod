@@ -1,0 +1,62 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010001;
+use strict;
+use warnings;
+
+use App::IODUtils;
+use App::INIUtils::Common;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{grep_iod} = {
+    v => 1.1,
+    summary => 'Filter IOD using pattern against section/key/value',
+    args => {
+        %App::IODUtils::common_args,
+        %App::INIUtils::Common::args_grep,
+    },
+    result_naked => 1,
+    'cmdline.skip_format' => 1,
+};
+sub grep_iod {
+    my %args = @_;
+
+    my $reader = App::IODUtils::_get_reader(\%args);
+
+    my $hoh = $reader->read_string($args{iod});
+    $hoh = App::INIUtils::Common::grep_hoh(hoh => $hoh, %args);
+    App::INIUtils::Common::hoh_as_ini($hoh);
+}
+
+my $cli = Perinci::CmdLine::Any->new(
+    url => '/main/grep_iod',
+    read_config => 0,
+    read_env => 0,
+);
+
+$cli->common_opts->{version}{getopt} = 'V';
+
+$cli->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Examples:
+
+ # only show sections with 'foo' in their name
+ % grep-iod --section foo /path/to/file.iod
+
+ # do not (-v) show sections with 'foo' in their name, do case-insensitive matching (-i)
+ % grep-iod --section foo -iv /path/to/file.iod
+
+ # only show keys with 'foo' in their name
+ % grep-iod --key foo /path/to/file.iod
+
+ # only show values with 'foo' in their name
+ % grep-iod --value foo /path/to/file.iod
