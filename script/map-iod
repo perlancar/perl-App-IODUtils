@@ -1,0 +1,57 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010001;
+use strict;
+use warnings;
+
+use App::IODUtils;
+use App::INIUtils::Common;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{map_iod} = {
+    v => 1.1,
+    summary => 'Modify IOD section/key/value with Perl code',
+    args => {
+        %App::IODUtils::common_args,
+        %App::INIUtils::Common::args_map,
+    },
+    result_naked => 1,
+    'cmdline.skip_format' => 1,
+};
+sub map_iod {
+    my %args = @_;
+
+    my $reader = App::IODUtils::_get_reader(\%args);
+
+    my $hoh = $reader->read_string($args{iod});
+    $hoh = App::INIUtils::Common::map_hoh(hoh => $hoh, %args);
+    App::INIUtils::Common::hoh_as_ini($hoh);
+}
+
+my $cli = Perinci::CmdLine::Any->new(
+    url => '/main/map_iod',
+    read_config => 0,
+    read_env => 0,
+);
+
+$cli->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Examples:
+
+ # make section names uppercase
+ % map-iod --section '$_ = uc' /path/to/file.iod
+
+ # prepend key name with section name
+ % map-iod --key '$_ = "$SECTION.$_"' /path/to/file.iod
+
+ # prepend value with section and key name
+ % map-iod --value '$_ = "$SECTION.$KEY.$_"' /path/to/file.iod
